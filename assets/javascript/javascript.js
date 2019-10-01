@@ -1,16 +1,16 @@
 var athleteList = ["Michael Jordan", "Tiger Woods", "Stephen Curry", "LeBron James", "James Harden", "Kevin Durant", "Peyton Manning", "Patrick Mahomes", "Aaron Rodgers", "Russell Wilson", "Odell Beckham Jr", "Tom Brady", "Julian Edelman", "Rob Gronkowksi", "Barry Sanders", "Todd Gurley", "Marshawn Lynch", "Mike Trout", "Aaron Judge", "Alex Rodriguez", "Barry Bonds"];
 
-function displayButtons(){
+function displayButtons() {
     $("#buttons-container").empty();
-    for (var i = 0; i < athleteList.length; i++){
-        var newButton = $('<button type="button" class="btn btn-primary">');
-        newButton.attr("data-name", athleteList[i]);
+    for (var i = 0; i < athleteList.length; i++) {
+        var newButton = $('<button type="button" class="btn btn-primary athlete-button">');
+        newButton.attr("data-name", athleteList[i]).attr("data-state", "still");
         newButton.text(athleteList[i]);
         $("#buttons-container").append(newButton);
     }
 }
 
-function displayGifs(){
+function displayGifs() {
     var athlete = $(this).attr("data-name");
     var apiKey = "ZN9GS40jADWRZaul3uTtgqve2lyPsjju";
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + athlete + "&limit=10";
@@ -18,15 +18,28 @@ function displayGifs(){
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).then(function(response){
+    }).then(function (response) {
         var athleteDiv = $("<div class='athlete'>");
-        var rating = response.rating;
-        var ratingDisplay= $("<p>").text("Rating: " + rating);
-        athleteDiv.append(ratingDisplay);
-        var gifURL = response.fixed_height_still.url;
-        var gif = $("<img>").attr("src", gifURL);
-        athleteDiv.append(gif);
-        $("#buttons-container").prepend(athleteDiv);
+        for (var j = 0; j < response.data.length; j++) {
+            var rating = response.data[j].rating.toUpperCase();
+            var ratingDisplay = $("<p>").text("Rating: " + rating);
+            var gifURL = response.data[j].images.fixed_height_still.url;
+            var gif = $("<img>").attr("src", gifURL);
+            athleteDiv.append(ratingDisplay);
+            athleteDiv.append(gif);
+        }
+        $("#gifs-container").prepend(athleteDiv);
     });
 }
+
+$("#add-athlete").on("click", function (event) {
+    event.preventDefualt();
+    var userInput = $("#athlete-input").val().trim();
+    athleteList.push(userInput);
+    displayButtons();
+});
+
+$(document).on("click", ".athlete-button", displayGifs);
+
+displayButtons();
 
