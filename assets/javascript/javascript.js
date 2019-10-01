@@ -6,20 +6,27 @@ function displayButtons(){
         var newButton = $('<button type="button" class="btn btn-primary">');
         newButton.attr("data-name", athleteList[i]);
         newButton.text(athleteList[i]);
-        $("button-container").append(newButton);
+        $("#buttons-container").append(newButton);
     }
 }
 
 function displayGifs(){
     var athlete = $(this).attr("data-name");
-    var apiKey = "ZN9GS40jADWRZaul3uTtgqve2lyPsjju"
-    var queryURL = "api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + athlete + "&limit=10"
+    var apiKey = "ZN9GS40jADWRZaul3uTtgqve2lyPsjju";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + athlete + "&limit=10";
 
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response){
-        
-    })
+        var athleteDiv = $("<div class='athlete'>");
+        var rating = response.rating;
+        var ratingDisplay= $("<p>").text("Rating: " + rating);
+        athleteDiv.append(ratingDisplay);
+        var gifURL = response.fixed_height_still.url;
+        var gif = $("<img>").attr("src", gifURL);
+        athleteDiv.append(gif);
+        $("#buttons-container").prepend(athleteDiv);
+    });
 }
 
