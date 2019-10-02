@@ -37,7 +37,7 @@ function displayGifs() {
 }
 
 $("#add-athlete").on("click", function(event) {
-    event.preventDefualt();
+    event.preventDefault();
     var userInput = $("#athlete-input").val().trim();
     console.log(userInput)
     athleteList.push(userInput);
