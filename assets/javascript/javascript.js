@@ -32,8 +32,10 @@ function displayGifs() {
             var gifURL = response.data[j].images.fixed_height_still.url;
             var dataStill = response.data[j].images.fixed_height_still.url;
             var dataAnimate = response.data[j].images.fixed_height.url;
-            var gif = $("<img class='gif'>").attr({ "src": gifURL, "data-still": dataStill, "data-animate": dataAnimate, "data-state": "still" });
-            athleteGif.append(ratingDisplay); 
+            var gif = $("<img class='gif img-fluid'>").attr({ "src": gifURL, "data-still": dataStill, "data-animate": dataAnimate, "data-state": "still" });
+            var favoriteButton = $('<button type="button" title="Add to Favorites" class="btn btn-primary btn-sm favorites-button float-right"><i class="far fa-star">');
+            athleteGif.append(favoriteButton); 
+            athleteGif.append(ratingDisplay);
             athleteGif.append(gif);
             athleteDiv.append(athleteGif); // appends each athlete gif to its own div
         }
@@ -44,7 +46,7 @@ function displayGifs() {
     });
 }
 
-// function to tale user input and add it to the athlete list array and display it as a button
+// function to take user input and add it to the athlete list array and display it as a button
 $("#add-athlete").on("click", function (event) {
     event.preventDefault();
     var athleteInput = $("#athlete-input");
@@ -105,6 +107,20 @@ $(document).on("click", ".gif", function () {
     }
 });
 
+$(document).on("click", ".favorites-button", function(){
+    var unFavoriteButton = $('<button type="button" title="Remove From Favorites" class="btn btn-primary btn-sm unfavorites-button float-right"><i class="fas fa-star">');
+    var newFavorite = $(this).parent().clone();
+    // localStorage.setItem("gif", JSON.stringify(newFavorite).html());
+    $(newFavorite).children(".favorites-button").remove();
+    $(newFavorite).prepend(unFavoriteButton);
+    $("#favorites-container").append(newFavorite)
+});
+
+$(document).on("click", ".unfavorites-button", function(){
+    var newUnFavorite = $(this).parent();
+    $(newUnFavorite).remove();
+});
+
 // calls the display buttons function to display the athlete list as buttons on page load
 displayButtons();
-
+// $("#favorites-container").html(localStorage.getItem(JSON.parse("gif")))

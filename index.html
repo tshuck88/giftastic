@@ -12,26 +12,34 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <title>GifTastic</title>
+    <script src="https://kit.fontawesome.com/c1cde147ef.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col" id="buttons-container"></div>
+    <!-- <div class="container"> -->
+    <div class="row">
+        <div class="col" id="buttons-container"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 order-3 order-md-1">
+            <h4 class="text-center">Your Favorites</h4>
+            <div id="favorites-container"></div>
         </div>
-        <div class="row">
-            <div class="col-md-9" id="gifs-container"></div>
-            <div class="col-md-3" id="add-button-container">
-                <form>
-                    <div class="form-group">
-                        <label for="add-athlete">Add an athlete</label>
-                        <input type="text" class="form-control" id="athlete-input" placeholder="Michael Jordan">
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="add-athlete">Submit</button>
-                </form>
-            </div>
+        <div class="col-md-6 order-2 order-md-2">
+                <h4 class="text-center">Results</h4>
+                <div id="gifs-container"></div>
+        </div>
+        <div class="col-md-2 order-1 order-md-3" id="add-button-container">
+            <form>
+                <div class="form-group">
+                    <label for="add-athlete"><h5>Add an athlete</h5></label>
+                    <input type="text" class="form-control" id="athlete-input" placeholder="Michael Jordan">
+                </div>
+                <button type="submit" class="btn btn-primary" id="add-athlete">Submit</button>
+            </form>
         </div>
     </div>
+    <!-- </div> -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -44,7 +52,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="assets/javascript/javascript.js"></script>
 </body>
 
