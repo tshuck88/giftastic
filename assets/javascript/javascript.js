@@ -45,18 +45,30 @@ $("#add-athlete").on("click", function (event) {
         athleteList.push(userInput);
         displayButtons();
         athleteInput.val("");
-    }
-    if (userInput === "") {
-        alert("Please enter the name of an athlete");
+    } else if (userInput === "") {
+        alert("Please enter the name of an athlete.");
         athleteInput.val("");
-    }
-    if (athleteList.includes(userInput)) {
-        alert("That name has already been added. Please enter another name");
-        athleteInput.val("");
+    } else {
+        for (var k = 0; k < athleteList.length; k++) {
+            if (userInput === athleteList[k]) {
+                alert("That name has already been added. Please enter another name.");
+                athleteInput.val("");
+            }
+        }
     }
 });
 
 $(document).on("click", ".athlete-button", displayGifs);
+
+$(".athlete-button").on("click", function () {
+    // if ($("#next-10").length == 0) {
+        $("#add-button-container").append('<button type="submit" class="btn btn-primary" id="next-10">Next 10 Gifs</button>')
+    //}
+});
+
+
+
+
 
 $(document).on("click", ".gif", function () {
     var state = $(this).attr("data-state");
