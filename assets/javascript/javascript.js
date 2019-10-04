@@ -3,6 +3,7 @@ var athleteList = ["Michael Jordan", "Tiger Woods", "Stephen Curry", "LeBron Jam
 var athlete;
 var apiKey = "ZN9GS40jADWRZaul3uTtgqve2lyPsjju";
 var next10;
+var favoritesContainer = $("#favorites-container")
 
 // function that loops through the athelete list array and displays it as buttons
 function displayButtons() {
@@ -87,7 +88,9 @@ $(document).on("click", "#next-10", function () {
             var gifURL = response.data[j].images.fixed_height_still.url;
             var dataStill = response.data[j].images.fixed_height_still.url;
             var dataAnimate = response.data[j].images.fixed_height.url;
-            var gif = $("<img class='gif'>").attr({ "src": gifURL, "data-still": dataStill, "data-animate": dataAnimate, "data-state": "still" });
+            var gif = $("<img class='gif img-fluid'>").attr({ "src": gifURL, "data-still": dataStill, "data-animate": dataAnimate, "data-state": "still" });
+            var favoriteButton = $('<button type="button" title="Add to Favorites" class="btn btn-primary btn-sm favorites-button float-right"><i class="far fa-star">');
+            athleteGif.append(favoriteButton);
             athleteGif.append(ratingDisplay);
             athleteGif.append(gif);
             athleteDiv.append(athleteGif);
@@ -107,20 +110,23 @@ $(document).on("click", ".gif", function () {
     }
 });
 
+// function to move the gif the user favorited to the favorites container
 $(document).on("click", ".favorites-button", function(){
     var unFavoriteButton = $('<button type="button" title="Remove From Favorites" class="btn btn-primary btn-sm unfavorites-button float-right"><i class="fas fa-star">');
     var newFavorite = $(this).parent().clone();
-    // localStorage.setItem("gif", JSON.stringify(newFavorite).html());
     $(newFavorite).children(".favorites-button").remove();
     $(newFavorite).prepend(unFavoriteButton);
-    $("#favorites-container").append(newFavorite)
+    favoritesContainer.append(newFavorite);
+    localStorage.setItem("favorites", favoritesContainer.html()) // after adding an item to favorites,  saves the items in current favorites container in local storage
 });
 
+// function to remove the gif from favorites container
 $(document).on("click", ".unfavorites-button", function(){
     var newUnFavorite = $(this).parent();
     $(newUnFavorite).remove();
+    localStorage.setItem("favorites", favoritesContainer.html()); // after removing an item from favorites, saves the current favorites container in local storage
 });
 
 // calls the display buttons function to display the athlete list as buttons on page load
-displayButtons();
-// $("#favorites-container").html(localStorage.getItem(JSON.parse("gif")))
+displayButtons()
+favoritesContainer.html(localStorage.getItem("favorites")); // displays favorites container stored in local storage
